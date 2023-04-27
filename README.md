@@ -39,3 +39,39 @@ Install the IOx application with the method of your choice: CLI, Local Manager, 
 
 Once the application runs it listens on port TCP/21 and uses TCP/20 for data. Not that you must use passive mode.
 
+## Connecting to FTP server
+
+IOx app will run using an IP address distributed from a DHCP pool configured in IOS (please check Cisco IOS documentation to do that!).
+
+You can then connect using user "cisco" and password "cisco":
+
+````sh
+[etychon@squeeze ~ ]$ ftp -P 2121 192.168.2.163
+Connected to 192.168.2.163.
+220 ProFTPD Server (ProFTPD Default Installation) [10.8.72.84]
+Name (192.168.2.163:etychon): cisco
+331 Password required for cisco
+Password:
+230 User cisco logged in
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp> ls -al
+229 Entering Extended Passive Mode (|||12522|)
+ftp: Can't connect to `192.168.2.163:12522': Connection refused
+200 EPRT command successful
+150 Opening ASCII mode data connection for file list
+drwxr-sr-x   2 cisco    cisco        4096 Apr 27 12:19 .
+drwxr-xr-x   1 root     root         4096 Apr 27 12:19 ..
+226 Transfer complete
+ftp> put edge_app_1219.tar
+local: edge_app_1219.tar remote: edge_app_1219.tar
+200 EPRT command successful
+150 Opening BINARY mode data connection for edge_app_1219.tar
+100% |******************************************************************************************************************************************************************************************************|   124 MiB   33.12 MiB/s    00:00 ETA
+226 Transfer complete
+130039296 bytes sent in 00:03 (33.08 MiB/s)
+ftp> quit
+221 Goodbye.
+````
+
+You can change the login and credentials by editing the Dockerfile, which is highly recommended for real deployments.
