@@ -13,6 +13,7 @@ trap cleanup SIGINT SIGTERM
                                                                            
 while [ 1 ]                                                                
 do                                                                         
-  sleep 60 &                                                             
+  openrc default
+  sleep 60 &
   wait $!                                                                
 done
