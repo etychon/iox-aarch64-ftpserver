@@ -43,7 +43,13 @@ Once the application runs it listens on port TCP/21 and uses TCP/20 for data. No
 
 IOx app will run using an IP address distributed from a DHCP pool configured in IOS (please check Cisco IOS documentation to do that!).
 
-You can then connect using user "cisco" and password "cisco":
+Depending on the configuration you may have to NAT that application IP address to a global IP address using NAT, for instance:
+
+````sh
+ip nat inside source static tcp <iox_ip> 21 interface gigabitEthernet 0/0/0 2121
+````
+
+You can then connect using user "cisco" and password "cisco" on the gigabitEthernet 0/0/0 IP address on TCP port 2121:
 
 ````sh
 [etychon@squeeze ~ ]$ ftp -P 2121 192.168.2.163
